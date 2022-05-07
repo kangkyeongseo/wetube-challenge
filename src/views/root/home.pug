@@ -1,4 +1,5 @@
 extends ../base
+include ../mixins/video
 
 block content 
     header
@@ -6,3 +7,8 @@ block content
         ul
             li Join 
             li Login 
+            li
+                a(href="video/upload") Upload Video 
+    main 
+        each video in videos
+            +video(video)

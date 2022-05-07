@@ -1,4 +1,11 @@
 extends ../base
 
 block content
-    h1 Watch
+    main
+        h1=video.title
+        h2=video.description
+        span=video.hashtags 
+        hr
+        a(href=`${video._id}/edit`) Edit Video  
+        br
+        a(href=`${video._id}/delete`) Delete Video  
