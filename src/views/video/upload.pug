@@ -1,14 +1,12 @@
 extends ../base
 
 block content
-    header
-        h1 Upload
-    main
-        form(method="POST")
-            label(for="title") Title  
-            input(type="text" placeholder="Title" id="title" name="title")
-            label(for="description") Description
-            input(type="text" placeholder="Description" id="description" name="description")
-            label(for="hashtags") Hashtag
-            input(type="text" placeholder="Please separate them with commas" id="hashtags" name="hashtags")
-            input(type="submit" value="Upload Video")
+    h1 Upload
+    form(method="POST")
+        label(for="title") Title  
+        input(type="text" placeholder="Title" id="title" name="title")
+        label(for="description") Description
+        input(type="text" placeholder="Description" id="description" name="description")
+        label(for="hashtags") Hashtag
+        input(type="text" placeholder="Please separate them with commas" id="hashtags" name="hashtags")
+        input(type="submit" value="Upload Video")

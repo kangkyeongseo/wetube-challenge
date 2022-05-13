@@ -1,4 +1,17 @@
 extends ../base
 
 block content
-    h1 User Edit
+    h1 Edit #{user.name} profile
+    if errorMessage 
+        span=errorMessage
+    form(method="POST")
+        label(for="user-id") ID  
+        input(type="text" placeholder="ID" id="user-id" name="userId" required value=user.userId)
+        label(for="email") E-Mail
+        input(type="email" placeholder="E-Mail" id="email" name="email" required value=user.email)
+        label(for="name") Name
+        input(type="text" placeholder="Name" id="name" name="name" required value=user.name)         
+        input(type="submit" value="Edit")
+    a(href="/user/change-password") Change Password 
+    br
+    a(href="/user/delete") Delete Profile 

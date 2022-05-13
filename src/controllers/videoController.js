@@ -1,5 +1,10 @@
 import Video from "../models/Video";
 
+export const getHome = async (req, res) => {
+  const videos = await Video.find({});
+  res.render("root/home", { videos });
+};
+
 export const getUpload = (req, res) => res.render("video/upload");
 export const postUpload = async (req, res) => {
   const {

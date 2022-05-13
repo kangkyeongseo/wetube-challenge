@@ -1,0 +1,17 @@
+header
+    ul  
+        li
+            a(href="/") Home
+        if !logedIn
+            li 
+                a(href="/login") Login
+            li 
+                a(href="/join") Join              
+        li
+            a(href="/video/upload") Upload Video 
+        if logedIn
+            li 
+                a(href=`/user/${logedInUser._id}`)=logedInUser.userId
+            li 
+                a(href="/user/logout") Logout 
+        

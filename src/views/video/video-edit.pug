@@ -1,14 +1,13 @@
 extends ../base
 
 block content
-    main
-        h1 #{video.title} Edit 
-        hr
-        form(method="POST")
-            label(for="title") Title  
-            input(type="text" value=video.title id="title" name="title")
-            label(for="description") Description
-            input(type="text" value=video.description id="description" name="description")
-            label(for="hashtags") Hashtag
-            input(type="text" value=video.hashtags.toString() id="hashtags" name="hashtags")
-            input(type="submit" value="Upload Video")
+    h1 #{video.title} Edit 
+    hr
+    form(method="POST")
+        label(for="title") Title  
+        input(type="text" value=video.title id="title" name="title")
+        label(for="description") Description
+        input(type="text" value=video.description id="description" name="description")
+        label(for="hashtags") Hashtag
+        input(type="text" value=video.hashtags.toString() id="hashtags" name="hashtags")
+        input(type="submit" value="Upload Video")

@@ -1,6 +1,9 @@
 import mongoose from "mongoose";
+import "./models/Video";
+import "./models/User";
+import "dotenv/config";
 
-mongoose.connect("mongodb://127.0.0.1:27017/wetube-challenge");
+mongoose.connect(process.env.MONGOOSE_URL);
 
 mongoose.connection.on("error", (error) => {
   console.log(error);
