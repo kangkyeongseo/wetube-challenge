@@ -11,7 +11,6 @@ import { getHome } from "../controllers/videoController";
 const rootRouter = new express.Router();
 
 rootRouter.get("/", getHome);
-rootRouter.get("/login", getLogin);
 rootRouter.route("/login").get(getLogin).post(postLogin);
 rootRouter.route("/join").get(getJoin).post(postJoin);
 

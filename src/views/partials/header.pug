@@ -7,11 +7,11 @@ header
                 a(href="/login") Login
             li 
                 a(href="/join") Join              
-        li
-            a(href="/video/upload") Upload Video 
         if logedIn
+            li
+                a(href="/video/upload") Upload Video        
             li 
-                a(href=`/user/${logedInUser._id}`)=logedInUser.userId
+                a(href=`/user/${logedInUser._id}`)=logedInUser.name
             li 
                 a(href="/user/logout") Logout 
         
