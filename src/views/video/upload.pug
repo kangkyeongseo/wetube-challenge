@@ -2,11 +2,15 @@ extends ../base
 
 block content
     h1 Upload
-    form(method="POST")
+    form(method="POST" enctype="multipart/form-data")
+        label(for="video") Video File
+        input(type="file" id="video" name="video" accept="video/*" required)
+        label(for="thumb") Thumbnail
+        input(type="file" id="thumb" name="thumb" accept="image/*" required)
         label(for="title") Title  
-        input(type="text" placeholder="Title" id="title" name="title")
+        input(type="text" placeholder="Title" id="title" name="title" required)
         label(for="description") Description
-        input(type="text" placeholder="Description" id="description" name="description")
+        input(type="text" placeholder="Description" id="description" name="description" required)
         label(for="hashtags") Hashtag
         input(type="text" placeholder="Please separate them with commas" id="hashtags" name="hashtags")
         input(type="submit" value="Upload Video")

@@ -1,3 +1,4 @@
+import User from "../models/User";
 import Video from "../models/Video";
 
 export const getHome = async (req, res) => {
@@ -8,14 +9,23 @@ export const getHome = async (req, res) => {
 export const getUpload = (req, res) => res.render("video/upload");
 export const postUpload = async (req, res) => {
   const {
+    session: { user },
     body: { title, description, hashtags },
+    files: { video, thumb },
   } = req;
 
-  await Video.create({
+  const newVideo = await Video.create({
+    fileUrl: video[0].path,
+    thumbUrl: thumb[0].path,
     title,
     description,
     hashtags: Video.hashtagMaker(hashtags),
+    owner: user._id,
   });
+
+  const loggedUser = await User.findById(user._id);
+  loggedUser.videos.push(newVideo._id);
+  loggedUser.save();
 
   return res.redirect("/");
 };
@@ -25,7 +35,6 @@ export const getWatch = async (req, res) => {
   } = req;
 
   const video = await Video.findById(id);
-
   return res.render("video/watch", { video });
 };
 export const getVideoEdit = async (req, res) => {

@@ -4,7 +4,9 @@ block content
     h1 Edit #{user.name} profile
     if errorMessage 
         span=errorMessage
-    form(method="POST")
+    form(method="POST" enctype="multipart/form-data")
+        label(for="avatar") Avatar  
+        input(type="file" id="avatar" name="avatar" accept="image/*")
         label(for="user-id") ID  
         input(type="text" placeholder="ID" id="user-id" name="userId" required value=user.userId)
         label(for="email") E-Mail

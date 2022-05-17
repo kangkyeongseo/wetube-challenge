@@ -24,7 +24,7 @@ export const postLogin = async (req, res) => {
       .render("root/login", { errorMessage: "Passwords do not match." });
   }
 
-  req.session.logedIn = true;
+  req.session.loggedIn = true;
   req.session.user = user;
 
   return res.redirect("/");
@@ -62,6 +62,8 @@ export const postJoin = async (req, res) => {
     email,
     name,
     password,
+    socialOnly: false,
+    avatarUrl: "",
   });
 
   return res.redirect("/login");
@@ -94,8 +96,9 @@ export const postUserEdit = async (req, res) => {
   const {
     body: { userId, email, name },
     session: {
-      user: { _id },
+      user: { _id, avatarUrl },
     },
+    file,
   } = req;
 
   const user = await User.findById(_id);
@@ -120,6 +123,7 @@ export const postUserEdit = async (req, res) => {
     userId,
     email,
     name,
+    avatarUrl: file ? file.path : avatarUrl,
   });
 
   return res.redirect(`/user/${_id}`);
@@ -249,15 +253,16 @@ export const finishGithubLogin = async (req, res) => {
     let githubUser = await User.findOne({ email: emailObj.email });
 
     if (!githubUser) {
-      emailUser = await User.create({
+      githubUser = await User.create({
         userId: user.login,
         email: emailObj.email,
         password: "",
         name: user.name,
         socialOnly: true,
+        avatarUrl: user.avatar_url,
       });
     }
-    req.session.logedIn = true;
+    req.session.loggedIn = true;
     req.session.user = githubUser;
     return res.redirect("/");
   } else {

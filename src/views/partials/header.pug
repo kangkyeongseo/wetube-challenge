@@ -2,16 +2,16 @@ header
     ul  
         li
             a(href="/") Home
-        if !logedIn
+        if !loggedIn
             li 
                 a(href="/login") Login
             li 
                 a(href="/join") Join              
-        if logedIn
+        if loggedIn
             li
                 a(href="/video/upload") Upload Video        
             li 
-                a(href=`/user/${logedInUser._id}`)=logedInUser.name
+                a(href=`/user/${loggedInUser._id}`)=loggedInUser.name
             li 
                 a(href="/user/logout") Logout 
         

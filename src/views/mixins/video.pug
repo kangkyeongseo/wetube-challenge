@@ -1,2 +1,7 @@
 mixin video(video)
-    a(href=`video/${video._id}`)=video.title
+    a(href=`video/${video._id}`)
+        div(style=`width:330px; height:180px; background-image:url(${video.thumbUrl}); background-size:cover; background-position: center;`)
+        span=video.title
+        div
+            span #{video.meta.view} 회
+            span #{video.meta.rating} / 5

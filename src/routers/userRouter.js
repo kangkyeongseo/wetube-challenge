@@ -11,10 +11,14 @@ import {
   postUserEdit,
   startGithubLogin,
 } from "../controllers/userController";
+import { avatarUpload } from "../middleware";
 
 const userRouter = new express.Router();
 
-userRouter.route("/edit").get(getUserEdit).post(postUserEdit);
+userRouter
+  .route("/edit")
+  .get(getUserEdit)
+  .post(avatarUpload.single("avatar"), postUserEdit);
 userRouter
   .route("/change-password")
   .get(getChangePassword)

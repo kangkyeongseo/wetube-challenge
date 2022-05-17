@@ -28,6 +28,7 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(logger);
 app.use(sessionMiddeware);
+app.use("/uploads", express.static("uploads"));
 
 app.use("/", rootRouter);
 app.use("/video", videoRouter);

@@ -2,4 +2,6 @@ extends ../base
 
 block content
     h1 Hello, #{user.name}!
+    if user.avatarUrl !== ""
+        img(src=user.avatarUrl.includes("github") ? user.avatarUrl : "/" + user.avatarUrl)
     a(href="/user/edit") Edit Profile
