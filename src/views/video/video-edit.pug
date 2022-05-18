@@ -1,9 +1,10 @@
 extends ../base
 
 block content
-    h1 #{video.title} Edit 
-    hr
-    form(method="POST")
+    h1 #{video.title} Edit
+    form(method="POST" enctype="multipart/form-data")
+        label(for="thumb") Thumbnail
+        input(type="file" id="thumb" name="thumb" accept="image/*" required)
         label(for="title") Title  
         input(type="text" value=video.title id="title" name="title")
         label(for="description") Description

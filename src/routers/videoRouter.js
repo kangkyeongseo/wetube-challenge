@@ -5,9 +5,10 @@ import {
   getVideoEdit,
   getWatch,
   postUpload,
+  postVideoDelete,
   postVideoEdit,
 } from "../controllers/videoController";
-import { videoUpload } from "../middleware";
+import { thumbnailUpload, videoUpload } from "../middleware";
 
 const videoRouter = new express.Router();
 
@@ -16,7 +17,10 @@ videoRouter
   .get(getUpload)
   .post(videoUpload.fields([{ name: "video" }, { name: "thumb" }]), postUpload);
 videoRouter.get("/:id", getWatch);
-videoRouter.route("/:id/edit").get(getVideoEdit).post(postVideoEdit);
-videoRouter.get("/:id/delete", getVideoDelete);
+videoRouter
+  .route("/:id/edit")
+  .get(getVideoEdit)
+  .post(thumbnailUpload.single("thumb"), postVideoEdit);
+videoRouter.route("/:id/delete").get(getVideoDelete).post(postVideoDelete);
 
 export default videoRouter;

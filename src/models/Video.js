@@ -10,6 +10,7 @@ const videoSchema = new mongoose.Schema({
     view: { type: Number, default: 0 },
     rating: { type: Number, default: 0 },
   },
+  createdAt: { type: Date, required: true, default: Date.now },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
 });
 
