@@ -8,7 +8,7 @@ export const getHome = async (req, res) => {
     .sort({ createdAt: "desc" })
     .populate("owner");
 
-  res.render("root/home", { videos, titleName: "WETUBE | HOME" });
+  res.render("root/home", { videos, pageTitle: "HOME" });
 };
 
 // Get Upload Video
@@ -53,7 +53,7 @@ export const getWatch = async (req, res) => {
   const video = await Video.findById(id).populate("owner");
   return res.render("video/watch", {
     video,
-    titleName: `WETUBE | ${video.title}`,
+    pageTitle: video.title,
   });
 };
 
@@ -67,7 +67,7 @@ export const getVideoEdit = async (req, res) => {
   if (String(user._id) === String(video.owner._id)) {
     return res.render("video/video-edit", {
       video,
-      pageTitle: "WETUBE | EDIT",
+      pageTitle: "EDIT",
     });
   } else {
     return res.redirect("/");
@@ -97,7 +97,7 @@ export const getVideoDelete = async (req, res) => {
     params: { id },
   } = req;
   if (!user.socialOnly) {
-    return res.render("video/video-delete");
+    return res.render("video/video-delete", { pageTitle: "DELETE" });
   } else {
     await Video.findByIdAndDelete(id);
     return res.redirect("/");
@@ -117,6 +117,7 @@ export const postVideoDelete = async (req, res) => {
     return res.redirect("/");
   } else {
     return res.render("video/video-delete", {
+      pageTitle: "DELETE",
       errorMessage: "sswords do not match.",
     });
   }

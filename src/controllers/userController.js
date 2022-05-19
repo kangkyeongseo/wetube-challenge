@@ -2,7 +2,12 @@ import User from "../models/User";
 import bcrypt from "bcrypt";
 import fetch from "node-fetch";
 
-export const getLogin = (req, res) => res.render("root/login");
+// Get Login
+export const getLogin = (req, res) => {
+  return res.render("root/login", { pageTitle: "LOGIN" });
+};
+
+// Posts Login
 export const postLogin = async (req, res) => {
   const {
     body: { userId, password },
@@ -11,17 +16,19 @@ export const postLogin = async (req, res) => {
   const user = await User.findOne({ userId, socilaOnly: false });
 
   if (!user) {
-    return res
-      .status(400)
-      .render("root/login", { errorMessage: "ID does not exist." });
+    return res.status(400).render("root/login", {
+      pageTitle: "LOGIN",
+      errorMessage: "ID does not exist.",
+    });
   }
 
   const loginOk = await bcrypt.compare(password, user.password);
 
   if (!loginOk) {
-    return res
-      .status(400)
-      .render("root/login", { errorMessage: "Passwords do not match." });
+    return res.status(400).render("root/login", {
+      pageTitle: "LOGIN",
+      errorMessage: "Passwords do not match.",
+    });
   }
 
   req.session.loggedIn = true;
@@ -30,7 +37,12 @@ export const postLogin = async (req, res) => {
   return res.redirect("/");
 };
 
-export const getJoin = (req, res) => res.render("root/join");
+// Get Join
+export const getJoin = (req, res) => {
+  return res.render("root/join", { pageTitle: "JOIN" });
+};
+
+// Post Join
 export const postJoin = async (req, res) => {
   const {
     body: { userId, email, name, password, password2 },
@@ -40,21 +52,24 @@ export const postJoin = async (req, res) => {
   const emailExists = await User.exists({ email });
 
   if (password !== password2) {
-    return res
-      .status(400)
-      .render("root/join", { errorMessage: "Passwords do not match." });
+    return res.status(400).render("root/join", {
+      pageTitle: "JOIN",
+      errorMessage: "Passwords do not match.",
+    });
   }
 
   if (idExists) {
-    return res
-      .status(400)
-      .render("root/join", { errorMessage: "This ID is already in use." });
+    return res.status(400).render("root/join", {
+      pageTitle: "JOIN",
+      errorMessage: "This ID is already in use.",
+    });
   }
 
   if (emailExists) {
-    return res
-      .status(400)
-      .render("root/join", { errorMessage: "This E-Mail is already in use." });
+    return res.status(400).render("root/join", {
+      pageTitle: "JOIN",
+      errorMessage: "This E-Mail is already in use.",
+    });
   }
 
   await User.create({
@@ -69,17 +84,23 @@ export const postJoin = async (req, res) => {
   return res.redirect("/login");
 };
 
+// Get User Detail
 export const getDetail = async (req, res) => {
   const {
-    session: {
-      user: { _id },
-    },
+    params: { id },
   } = req;
 
-  const user = await User.findById(_id);
-
-  return res.render("user/detail", { user });
+  const user = await User.findById(id).populate({
+    path: "videos",
+    populate: {
+      path: "owner",
+    },
+  });
+  console.log(user);
+  return res.render("user/detail", { pageTitle: user.name, user });
 };
+
+// Get User Edit
 export const getUserEdit = async (req, res) => {
   const {
     session: {
@@ -88,10 +109,12 @@ export const getUserEdit = async (req, res) => {
   } = req;
   if (_id) {
     const user = await User.findById(_id);
-    return res.render("user/user-edit", { user });
+    return res.render("user/user-edit", { pageTitle: "EDIT", user });
   }
   return res.status(403).redirect("/");
 };
+
+// Post User Edit
 export const postUserEdit = async (req, res) => {
   const {
     body: { userId, email, name },
@@ -107,6 +130,7 @@ export const postUserEdit = async (req, res) => {
 
   if (userIdExists !== null && userIdExists._id.toString() !== _id) {
     return res.status(400).render("user/user-edit", {
+      pageTitle: "EDIT",
       errorMessage: "This ID is already taken.",
       user,
     });
@@ -114,22 +138,33 @@ export const postUserEdit = async (req, res) => {
 
   if (emailExists !== null && emailExists._id.toString() !== _id) {
     return res.status(400).render("user/user-edit", {
+      pageTitle: "EDIT",
       errorMessage: "This E-Mail is already taken.",
       user,
     });
   }
 
-  await User.findByIdAndUpdate(_id, {
-    userId,
-    email,
-    name,
-    avatarUrl: file ? file.path : avatarUrl,
-  });
+  const updeateUser = await User.findByIdAndUpdate(
+    _id,
+    {
+      userId,
+      email,
+      name,
+      avatarUrl: file ? file.path : avatarUrl,
+    },
+    { new: true }
+  );
+
+  req.session.user = updeateUser;
 
   return res.redirect(`/user/${_id}`);
 };
+
+// Get Change Password
 export const getChangePassword = (req, res) =>
-  res.render("user/password-change");
+  res.render("user/password-change", { pageTitle: "CHANGE-PASSWORD" });
+
+// Post Change Password
 export const postChangePassword = async (req, res) => {
   const {
     session: {
@@ -143,12 +178,14 @@ export const postChangePassword = async (req, res) => {
 
   if (!checkOk) {
     return res.status(400).render("user/password-change", {
+      pageTitle: "CHANGE-PASSWORD",
       errorMessage: "Current Password do not match.",
     });
   }
 
   if (newPassword !== confirmPassword) {
     return res.status(400).render("user/password-change", {
+      pageTitle: "CHANGE-PASSWORD",
       errorMessage: "Confirm Password do not match.",
     });
   }
@@ -159,15 +196,19 @@ export const postChangePassword = async (req, res) => {
 
   return res.redirect(`/user/${user._id}`);
 };
+
+// Get Logout
 export const getLogout = (req, res) => {
   req.session.destroy();
   return res.redirect("/");
 };
 
+// Get User Delete
 export const getUserDelete = (req, res) => {
-  return res.render("user/user-delete");
+  return res.render("user/user-delete", { pageTitle: "DELETE-USER" });
 };
 
+// Post User Delete
 export const postUserDelete = async (req, res) => {
   const {
     session: { user },
@@ -177,9 +218,10 @@ export const postUserDelete = async (req, res) => {
   const checkOk = await bcrypt.compare(password, user.password);
 
   if (!checkOk) {
-    return res
-      .status(400)
-      .render("user/user-delete", { errorMessage: "Password do not match" });
+    return res.status(400).render("user/user-delete", {
+      pageTitle: "DELETE-USER",
+      errorMessage: "Password do not match",
+    });
   }
 
   await User.findByIdAndDelete(user._id);
@@ -189,6 +231,7 @@ export const postUserDelete = async (req, res) => {
   return res.redirect("/");
 };
 
+// Github Oauth
 export const startGithubLogin = (req, res) => {
   const url = "https://github.com/login/oauth/authorize";
   const config = {
@@ -239,8 +282,6 @@ export const finishGithubLogin = async (req, res) => {
         },
       })
     ).json();
-    console.log(user);
-    console.log(email);
 
     const emailObj = email.find(
       (email) => email.primary === true && email.verified === true

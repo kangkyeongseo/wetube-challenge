@@ -13,7 +13,7 @@ block content
         div 
             if video.owner.avatarUrl !== ""
                 img(src=video.owner.avatarUrl.includes("github") ? video.owner.avatarUrl : "/" + video.owner.avatarUrl)
-            span=video.owner.name
+            a(href=`/user/${video.owner._id}`)=video.owner.name
         p=video.description
     if String(loggedInUser._id) === String(video.owner._id)
         hr
