@@ -14,4 +14,5 @@ header
                 a(href=`/user/${loggedInUser._id}`)=loggedInUser.name
             li 
                 a(href="/user/logout") Logout 
-        
+    form(method="GET" action="/search")     
+        input(type="text" name="search")

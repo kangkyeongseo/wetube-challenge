@@ -7,12 +7,13 @@ import {
   postLogin,
 } from "../controllers/userController";
 
-import { getHome } from "../controllers/videoController";
+import { getHome, getSearch } from "../controllers/videoController";
 import { publicMiddleware } from "../middleware";
 
 const rootRouter = new express.Router();
 
 rootRouter.get("/", getHome);
+rootRouter.get("/search", getSearch);
 rootRouter.route("/login").all(publicMiddleware).get(getLogin).post(postLogin);
 rootRouter.route("/join").all(publicMiddleware).get(getJoin).post(postJoin);
 

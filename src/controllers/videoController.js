@@ -7,8 +7,21 @@ export const getHome = async (req, res) => {
   const videos = await Video.find({})
     .sort({ createdAt: "desc" })
     .populate("owner");
+  console.log(videos);
+  return res.render("root/home", { videos, pageTitle: "HOME" });
+};
 
-  res.render("root/home", { videos, pageTitle: "HOME" });
+// Search
+
+export const getSearch = async (req, res) => {
+  const {
+    query: { search },
+  } = req;
+  const videos = await Video.find({
+    title: search,
+  }).populate("owner");
+  console.log(videos);
+  return res.render("root/search", { videos, pageTitle: "SERACH" });
 };
 
 // Get Upload Video
