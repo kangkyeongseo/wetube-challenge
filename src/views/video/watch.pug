@@ -1,7 +1,21 @@
 extends ../base
 
 block content
-    video(src="/"+video.fileUrl controls=true)
+    video(src="/"+video.fileUrl controls=true).video__player
+    div.video__controller
+        div.controller__timeline
+            input(type="range" value=0 step=0.01)
+        div.controller__play
+            i.fas.fa-play
+        div.controller__volume
+            i.fas.fa-volume-up
+            input(type="range" min=0 max=1 step=0.01 value=0.5)
+        div.controller__timestamp 
+            span.timestamp__start 00:00
+            span /
+            span.timestamp__end 00:00
+        div.controller__mode 
+            i.fas.fa-expand
     div 
         h3=video.title
         ul
@@ -20,3 +34,4 @@ block content
         a(href=`${video._id}/edit`) Edit Video  
         br
         a(href=`${video._id}/delete`) Delete Video  
+    script(src="/static/js/videoPlayer.js")
