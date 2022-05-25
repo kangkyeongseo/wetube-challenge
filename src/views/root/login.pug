@@ -1,13 +1,16 @@
 extends ../base
 
-block content    
-    h1 Login
-    if errorMessage 
-        span=errorMessage
-    form(method="POST")
-        label(for="user-id") ID  
-        input(type="text" placeholder="ID" id="user-id" name="userId" required)
-        label(for="password") Password
-        input(type="password" placeholder="Password" id="password" name="password" required)
-        input(type="submit" value="Login")
-        a(href="/user/github/login") Login with Github 
+block content
+    div.login.form__page 
+        div.form__container
+            h1 Login
+            if errorMessage 
+                span=errorMessage
+            form(method="POST").form
+                input(type="text" placeholder="ID" id="user-id" name="userId" required)
+                input(type="password" placeholder="Password" id="password" name="password" required)
+                div.form__btn
+                    input(type="submit" value="Login").form__submit
+                    a(href="/user/github/login").form__github Login with Github 
+                div.form__link
+                    a(href="/join") To Join Page ▶︎

@@ -1,8 +1,9 @@
 extends ../base
 include ../mixins/video
 
-block content 
-    each video in videos
-        +video(video)
-    else 
-        span Sorry, Can Not Found Video.
+block content
+    section.video__container
+        each video in videos
+            +video(video)
+        else 
+            span Sorry, Can Not Found Video.

@@ -1,0 +1,99 @@
+.video__box {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1280px;
+  aspect-ratio: 16 / 9;
+  background-color: #ffffff;
+  margin: 0 auto;
+  .video__player {
+    all: unset;
+  }
+  .video__controller {
+    width: 80%;
+    position: absolute;
+    bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+    background-color: rgba($color: #000000, $alpha: 0.8);
+    border-radius: 20px;
+    padding: 10px 35px;
+    .controller__timeline {
+      width: 65%;
+      input {
+        width: 100%;
+      }
+    }
+    .controller__timestamp {
+      font-size: 12px;
+    }
+    .controller__volume {
+      display: flex;
+      align-items: center;
+      input {
+        margin-right: 10px;
+      }
+    }
+  }
+}
+
+.video__content {
+  color: #ffffff;
+  max-width: 1280px;
+  margin: 0 auto;
+  margin-top: 20px;
+  padding-bottom: 20px;
+  .content__hash {
+    display: flex;
+    font-size: 14px;
+    color: $blue;
+    li {
+      margin-right: 5px;
+    }
+  }
+  .content__title {
+    font-size: 28px;
+    margin-bottom: 10px;
+  }
+  .content__meta {
+    font-size: 14px;
+    opacity: 0.7;
+    margin-bottom: 10px;
+    span {
+      margin-right: 5px;
+    }
+  }
+  .content__avatar {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    .default__avatar {
+      @include defaultAvatar;
+      width: 60px;
+      height: 60px;
+      i {
+        color: $darkGray;
+        font-size: 26px;
+      }
+    }
+    img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+    }
+    .avatar__content {
+      margin-left: 10px;
+      p {
+        font-size: 14px;
+        opacity: 0.7;
+      }
+    }
+  }
+  > a {
+    font-size: 14px;
+    color: $blue;
+  }
+}

@@ -1,37 +1,41 @@
 extends ../base
 
 block content
-    video(src="/"+video.fileUrl controls=true).video__player
-    div.video__controller
-        div.controller__timeline
-            input(type="range" value=0 step=0.01)
-        div.controller__play
-            i.fas.fa-play
-        div.controller__volume
-            i.fas.fa-volume-up
-            input(type="range" min=0 max=1 step=0.01 value=0.5)
-        div.controller__timestamp 
-            span.timestamp__start 00:00
-            span /
-            span.timestamp__end 00:00
-        div.controller__mode 
-            i.fas.fa-expand
-    div 
-        h3=video.title
-        ul
+    div.video__box
+        video(src="/"+video.fileUrl ).video__player
+        div.video__controller
+            div.controller__play
+                i.fas.fa-play
+            div.controller__timestamp 
+                span.timestamp__start 00:00
+                span /
+                span.timestamp__end 00:00
+            div.controller__timeline
+                input(type="range" value=0 step=0.01)
+            div.controller__volume
+                input(type="range" min=0 max=1 step=0.01 value=0.5)
+                i.fas.fa-volume-up
+            div.controller__mode 
+                i.fas.fa-expand
+    div.video__content 
+        ul.content__hash
             each hashtag in video.hashtags
                 li=hashtag
-        div     
+        h3.content__title=video.title
+        div.content__meta     
             span 조회수 #{video.meta.view}회
             span=video.createdAt
-        div 
-            if video.owner.avatarUrl !== ""
+        div.content__avatar
+            if video.owner.avatarUrl === ""
+                div.default__avatar
+                    i.fas.fa-user
+            else
                 img(src=video.owner.avatarUrl.includes("github") ? video.owner.avatarUrl : "/" + video.owner.avatarUrl)
-            a(href=`/user/${video.owner._id}`)=video.owner.name
-        p=video.description
-    if String(loggedInUser._id) === String(video.owner._id)
-        hr
-        a(href=`${video._id}/edit`) Edit Video  
-        br
-        a(href=`${video._id}/delete`) Delete Video  
+            div.avatar__content
+                a(href=`/user/${video.owner._id}`)=video.owner.name
+                p=video.description
+        if String(loggedInUser._id) === String(video.owner._id)
+            a(href=`${video._id}/edit`) Edit Video  
+            br
+            a(href=`${video._id}/delete`) Delete Video  
     script(src="/static/js/videoPlayer.js")

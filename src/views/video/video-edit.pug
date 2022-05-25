@@ -1,14 +1,13 @@
 extends ../base
 
 block content
-    h1 #{video.title} Edit
-    form(method="POST" enctype="multipart/form-data")
-        label(for="thumb") Thumbnail
-        input(type="file" id="thumb" name="thumb" accept="image/*" required)
-        label(for="title") Title  
-        input(type="text" value=video.title id="title" name="title")
-        label(for="description") Description
-        input(type="text" value=video.description id="description" name="description")
-        label(for="hashtags") Hashtag
-        input(type="text" value=video.hashtags.toString() id="hashtags" name="hashtags")
-        input(type="submit" value="Upload Video")
+    div.video-edit.form__page
+        div.form__container
+            h1 #{video.title} Edit
+            form(method="POST" enctype="multipart/form-data").form
+                input(type="file" id="thumb" name="thumb" accept="image/*" required)                
+                input(type="text" value=video.title id="title" name="title")                
+                input(type="text" value=video.description id="description" name="description")                
+                input(type="text" value=video.hashtags.toString() id="hashtags" name="hashtags")
+                div.form__btn        
+                    input(type="submit" value="Edit").form__submit

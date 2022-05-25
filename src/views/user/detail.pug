@@ -2,11 +2,17 @@ extends ../base
 include ../mixins/video
 
 block content
-    h1 Hello, #{user.name}!
-    if user.avatarUrl !== ""
-        img(src=user.avatarUrl.includes("github") ? user.avatarUrl : "/" + user.avatarUrl)
-    if String(loggedInUser._id) === String(user._id)
-        a(href="/user/edit") Edit Profile
-    hr
-    each video in user.videos 
-        +video(video)
+    div.user-detail
+        div.user-detail__container
+            if user.avatarUrl === ""
+                div.default__avatar
+                    i.fas.fa-user
+            else
+                img(src=user.avatarUrl.includes("github") ? user.avatarUrl : "/" + user.avatarUrl)
+            div.user-detail__content
+                h1 #{user.name}
+                if String(loggedInUser._id) === String(user._id)
+                    a(href="/user/edit") Edit Profile
+        section.video__container
+            each video in user.videos 
+                +video(video)

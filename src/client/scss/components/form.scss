@@ -1,0 +1,68 @@
+.form__page {
+  display: flex;
+  height: calc(100vh - 100px);
+  justify-content: center;
+  align-items: center;
+  .form__container {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: white;
+    background-color: $gray;
+    border: 0.1px solid rgba($color: #ffffff, $alpha: 0.2);
+    border-radius: 10px;
+    margin: 0 auto;
+    padding: 50px 0px;
+    h1 {
+      font-size: 20px;
+      text-transform: uppercase;
+      margin-bottom: 30px;
+    }
+    .form {
+      display: flex;
+      flex-direction: column;
+      input {
+        width: 300px;
+        height: 50px;
+        font-size: 15px;
+        padding: 5px 10px;
+        margin: 5px 0px;
+        border: none;
+      }
+      .form__btn {
+        display: flex;
+        justify-content: center;
+        .form__submit {
+          width: 100px;
+          border-radius: 5px;
+          color: #ffffff;
+          background-color: $darkGray;
+          border: 0.1px solid rgba($color: #ffffff, $alpha: 0.2);
+          cursor: pointer;
+        }
+        .form__github {
+          width: 190px;
+          height: 50px;
+          margin: 5px 0px;
+          margin-left: 10px;
+          display: block;
+          font-size: 14px;
+          color: #ffffff;
+          background-color: $blue;
+          text-align: center;
+          line-height: 50px;
+          border-radius: 5px;
+          border: 0.1px solid rgba($color: #ffffff, $alpha: 0.2);
+        }
+      }
+      .form__link {
+        a {
+          font-size: 14px;
+          color: $blue;
+          margin: 10px;
+        }
+      }
+    }
+  }
+}

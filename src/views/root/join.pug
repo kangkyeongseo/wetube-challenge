@@ -1,18 +1,16 @@
 extends ../base
 
-block content 
-    h1 Join
-    if errorMessage 
-        span=errorMessage
-    form(method="POST")
-        label(for="user-id") ID  
-        input(type="text" placeholder="ID" id="user-id" name="userId" required)
-        label(for="email") E-Mail
-        input(type="email" placeholder="E-Mail" id="email" name="email" required)
-        label(for="name") Name
-        input(type="text" placeholder="Name" id="name" name="name" required)
-        label(for="password") Password
-        input(type="password" placeholder="Password" id="password" name="password" required)
-        label(for="password2") Confirm Password
-        input(type="password" placeholder="Confirm Password" id="password2" name="password2" required)
-        input(type="submit" value="Join")
+block content
+    div.join.form__page
+        div.form__container
+            h1 Join
+            if errorMessage 
+                span=errorMessage
+            form(method="POST").form
+                input(type="text" placeholder="ID" id="user-id" name="userId" required)
+                input(type="email" placeholder="E-Mail" id="email" name="email" required)
+                input(type="text" placeholder="Name" id="name" name="name" required)
+                input(type="password" placeholder="Password" id="password" name="password" required)
+                input(type="password" placeholder="Confirm Password" id="password2" name="password2" required)
+                div.form__btn
+                    input(type="submit" value="Join").form__submit

@@ -1,0 +1,48 @@
+.video__link {
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  .link__container {
+    .link__thumb {
+      margin-bottom: 10px;
+      width: 330px;
+      height: 180px;
+      background-size: cover;
+      background-position: center;
+    }
+    .link__content {
+      display: flex;
+      img {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+      }
+      .default-avatar {
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        background-color: white;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        i {
+          color: $darkGray;
+        }
+      }
+      .link__info {
+        display: flex;
+        flex-direction: column;
+        margin-left: 15px;
+        font-size: 13px;
+        color: #9d9d9d;
+        span {
+          margin-bottom: 5px;
+          &:first-child {
+            font-size: 18px;
+            color: white;
+          }
+        }
+      }
+    }
+  }
+}
