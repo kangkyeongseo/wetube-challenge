@@ -100,19 +100,28 @@ const handelKeyDown = (event) => {
   if (code === "Space") {
     handlePlayBtn();
   }
-  if (code === "KeyF") {
+  if (code === "KeyF" && document.fullscreenElement === null) {
     videoBox.requestFullscreen();
     modeBtn.className = "fas fa-compress";
   }
-  if ("Escpae") {
+  if (code === "Escape" && document.fullscreenElement !== null) {
     document.exitFullscreen();
     modeBtn.className = "fas fa-expand";
   }
 };
 
+const handelEndVideo = () => {
+  const { id } = videoBox.dataset;
+  console.log(id);
+  fetch(`/api/video/${id}/view`, {
+    method: "POST",
+  });
+};
+
 video.addEventListener("loadedmetadata", handleLoadedData);
 video.addEventListener("timeupdate", handleTimeUpdate);
 video.addEventListener("click", handlePlayBtn);
+video.addEventListener("ended", handelEndVideo);
 timelineRange.addEventListener("input", handelTimelineRange);
 play.addEventListener("click", handlePlayBtn);
 volumeBtn.addEventListener("click", handleVolumeBtn);

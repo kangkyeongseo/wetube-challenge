@@ -134,3 +134,16 @@ export const postVideoDelete = async (req, res) => {
     });
   }
 };
+
+// Register View
+export const registerVideo = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  const video = await Video.findById(id);
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  video.meta.view = video.meta.view + 1;
+  await video.save();
+  return res.sendStatus(200);
+};

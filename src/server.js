@@ -8,6 +8,7 @@ import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import { sessionMiddeware } from "./middleware.js";
+import apiRouter from "./routers/apiRouter.js";
 
 const app = express();
 const PORT = 4000;
@@ -34,6 +35,7 @@ app.use("/static", express.static("assets"));
 app.use("/", rootRouter);
 app.use("/video", videoRouter);
 app.use("/user", userRouter);
+app.use("/api", apiRouter);
 
 const handleListen = () => console.log(`Listening on http://localhost${PORT}`);
 app.listen(PORT, handleListen);
