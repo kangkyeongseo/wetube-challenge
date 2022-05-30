@@ -5,6 +5,7 @@ const BASE_JS = "./src/client/js/";
 
 module.exports = {
   entry: {
+    recorder: BASE_JS + "recorder.js",
     main: BASE_JS + "main.js",
     videoPlayer: BASE_JS + "videoPlayer.js",
   },

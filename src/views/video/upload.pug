@@ -2,6 +2,9 @@ extends ../base
 
 block content
     div.upload.form__page
+        div.recorder__box 
+            video.recorder__video
+            button.recorder__btn Record Video
         div.form__container
             h1 Upload
             form(method="POST" enctype="multipart/form-data").form
@@ -12,3 +15,5 @@ block content
                 input(type="text" placeholder="Please separate them with commas" id="hashtags" name="hashtags")
                 div.form__btn
                     input(type="submit" value="Upload").form__submit
+    script(src="/static/js/recorder.js") 
+    
