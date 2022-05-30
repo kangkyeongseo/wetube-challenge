@@ -1,4 +1,6 @@
+const videoBox = document.querySelector(".video__box");
 const video = document.querySelector(".video__player");
+const controller = document.querySelector(".video__controller");
 const timeline = document.querySelector(".controller__timeline");
 const timelineRange = timeline.querySelector("input");
 const play = document.querySelector(".controller__play");
@@ -12,6 +14,8 @@ const endTime = timestamp.querySelector(".timestamp__end");
 const mode = document.querySelector(".controller__mode");
 const modeBtn = mode.querySelector("i");
 
+let controlsTimeout = null;
+let controlsMovementTimeout = null;
 let volumeSize = 0.5;
 video.volume = volumeSize;
 
@@ -61,19 +65,59 @@ const handelVolumeRange = (event) => {
 };
 
 const handelModeBtn = () => {
-  if (!video.fullscreen) {
-    video.requestFullscreen();
+  if (document.fullscreenElement === null) {
+    videoBox.requestFullscreen();
     modeBtn.className = "fas fa-compress";
   } else {
-    video.exitFullscreen();
+    document.exitFullscreen();
+    modeBtn.className = "fas fa-expand";
+  }
+};
+
+const removeShowing = () => {
+  controller.classList.remove("showing");
+};
+
+const handleMouseMove = () => {
+  if (controlsTimeout) {
+    clearTimeout(controlsTimeout);
+    controlsTimeout = null;
+  }
+  if (controlsMovementTimeout) {
+    clearTimeout(controlsMovementTimeout);
+    controlsMovementTimeout = null;
+  }
+  controller.classList.add("showing");
+  controlsMovementTimeout = setTimeout(removeShowing, 3000);
+};
+
+const handleMouseLeave = () => {
+  controlsTimeout = setTimeout(removeShowing, 3000);
+};
+
+const handelKeyDown = (event) => {
+  const { code } = event;
+  if (code === "Space") {
+    handlePlayBtn();
+  }
+  if (code === "KeyF") {
+    videoBox.requestFullscreen();
+    modeBtn.className = "fas fa-compress";
+  }
+  if ("Escpae") {
+    document.exitFullscreen();
     modeBtn.className = "fas fa-expand";
   }
 };
 
 video.addEventListener("loadedmetadata", handleLoadedData);
 video.addEventListener("timeupdate", handleTimeUpdate);
+video.addEventListener("click", handlePlayBtn);
 timelineRange.addEventListener("input", handelTimelineRange);
 play.addEventListener("click", handlePlayBtn);
 volumeBtn.addEventListener("click", handleVolumeBtn);
 volumeRange.addEventListener("input", handelVolumeRange);
 mode.addEventListener("click", handelModeBtn);
+videoBox.addEventListener("mousemove", handleMouseMove);
+videoBox.addEventListener("mouseleave", handleMouseLeave);
+window.addEventListener("keydown", handelKeyDown);

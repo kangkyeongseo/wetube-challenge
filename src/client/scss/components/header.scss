@@ -2,18 +2,19 @@ header {
   width: 100%;
   height: 60px;
   position: fixed;
+  z-index: 1000;
   display: flex;
-  padding: 0px 50px;
   justify-content: space-between;
   align-items: center;
+  padding: 0px 50px;
   background-color: $gray;
-  color: #fff;
+  color: #ffffff;
   .header__column {
     .header__logo {
       display: flex;
       align-items: center;
       font-size: 18px;
-      font-weight: bold;
+      font-weight: 700;
       i {
         color: $red;
         font-size: 26px;
@@ -25,8 +26,12 @@ header {
       align-items: center;
       li {
         margin-left: 30px;
+        &:hover {
+          opacity: 0.5;
+        }
       }
       .header__avatar {
+        cursor: pointer;
         .default__avatar {
           @include defaultAvatar;
           width: 35px;
@@ -50,14 +55,18 @@ header {
     input {
       width: 100%;
       padding: 5px 10px;
-      font-size: 20px;
+      font-size: 18px;
+      &:focus {
+        outline: none;
+      }
     }
     button {
       all: unset;
       position: absolute;
-      top: 9px;
+      top: 8px;
       right: 20px;
       color: $gray;
+      cursor: pointer;
     }
   }
   .avatar__menu {
@@ -68,7 +77,8 @@ header {
     height: 200px;
     background-color: $gray;
     font-size: 12px;
-
+    transform: translateX(200px);
+    transition: all 0.5s ease-in-out;
     ul {
       height: 100%;
       display: flex;
@@ -78,6 +88,14 @@ header {
         padding: 10px 0px;
         &:first-child {
           align-self: flex-end;
+          &:hover {
+            opacity: 0.5;
+          }
+        }
+        a {
+          &:hover {
+            opacity: 0.5;
+          }
         }
       }
       .list__exit {
@@ -94,7 +112,7 @@ header {
           height: 40px;
           i {
             color: $darkGray;
-            font-size: 16px;
+            font-size: 18px;
           }
         }
         span {
