@@ -1,0 +1,37 @@
+@keyframes messageAnimation {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+}
+
+.message {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  right: 0;
+  max-width: 300px;
+  margin: 0 auto;
+  border-radius: 20px;
+  padding: 10px 20px;
+  text-align: center;
+  z-index: 2000;
+  animation: messageAnimation 0.5s ease-in-out forwards;
+  animation-delay: 5s;
+  &.error {
+    background-color: red;
+    color: white;
+  }
+  &.info {
+    background-color: green;
+    color: white;
+  }
+  &.success {
+    background-color: blue;
+    color: white;
+  }
+}

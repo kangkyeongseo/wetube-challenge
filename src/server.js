@@ -9,6 +9,7 @@ import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
 import { sessionMiddeware } from "./middleware.js";
 import apiRouter from "./routers/apiRouter.js";
+import flash from "express-flash";
 
 const app = express();
 const PORT = 4000;
@@ -29,6 +30,7 @@ app.use(
 app.use(express.urlencoded({ extended: true }));
 app.use(logger);
 app.use(sessionMiddeware);
+app.use(flash());
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("assets"));
 app.use((req, res, next) => {
