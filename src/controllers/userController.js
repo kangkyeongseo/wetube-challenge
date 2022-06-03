@@ -204,6 +204,7 @@ export const postChangePassword = async (req, res) => {
 
 // Get Logout
 export const getLogout = (req, res) => {
+  req.session.loggedIn = false;
   req.session.user = null;
   req.flash("info", "Bye");
   return res.redirect("/");

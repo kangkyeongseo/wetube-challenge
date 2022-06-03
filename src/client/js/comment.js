@@ -2,11 +2,22 @@ import { async } from "regenerator-runtime";
 
 const videoContainer = document.querySelector(".video__box");
 const commentForm = document.querySelector(".comments__form");
+const deleteCommentBtn = document.querySelectorAll(".video__comment__delete");
 
-const addComment = (text) => {
+const handelDeleteBttn = async (evnet) => {
+  const targetComment = evnet.target.parentElement;
+  const { id } = targetComment.dataset;
+  await fetch(`/api/comment/${id}/delete`, {
+    method: "DELETE",
+  });
+  targetComment.remove();
+};
+
+const addComment = (text, id) => {
   const commentList = document.querySelector(".video__comments ul");
   const li = document.createElement("li");
   li.className = "video__comment";
+  li.dataset.id = id;
   const icon = document.createElement("i");
   icon.className = "fas fa-comment";
   const span = document.createElement("span");
@@ -35,7 +46,14 @@ const handleFormSubmit = async (event) => {
     body: JSON.stringify({ text }),
   });
   textarea.value = "";
-  addComment(text);
+
+  if (response.status === 201) {
+    const { newCommentId } = response.json();
+    addComment(text, newCommentId);
+  }
 };
 
 commentForm.addEventListener("submit", handleFormSubmit);
+deleteCommentBtn.forEach((btn) =>
+  btn.addEventListener("click", handelDeleteBttn)
+);
