@@ -1,6 +1,8 @@
 import User from "../models/User";
 import Video from "../models/Video";
+import Comment from "../models/Comment";
 import bcrypt from "bcrypt";
+import { async } from "regenerator-runtime";
 
 // Main Page
 export const getHome = async (req, res) => {
@@ -62,7 +64,7 @@ export const getWatch = async (req, res) => {
   const {
     params: { id },
   } = req;
-  const video = await Video.findById(id).populate("owner");
+  const video = await Video.findById(id).populate("owner").populate("comments");
   return res.render("video/watch", {
     video,
     pageTitle: video.title,
@@ -146,4 +148,32 @@ export const registerVideo = async (req, res) => {
   video.meta.view = video.meta.view + 1;
   await video.save();
   return res.sendStatus(200);
+};
+
+// Create Comment
+export const createComment = async (req, res) => {
+  const {
+    body: { text },
+    params: { id },
+    session: {
+      user: { _id },
+    },
+  } = req;
+
+  const video = await Video.findById(id);
+  const user = await User.findById(_id);
+
+  if (!video) {
+    return res.sendStatus(404);
+  }
+  const comment = await Comment.create({
+    text,
+    video: id,
+    owner: _id,
+  });
+
+  video.comments.push(comment._id);
+  video.save();
+
+  return res.sendStatus(201);
 };

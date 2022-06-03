@@ -12,6 +12,12 @@ const videoSchema = new mongoose.Schema({
   },
   createdAt: { type: Date, required: true, default: Date.now },
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment",
+    },
+  ],
 });
 
 videoSchema.static("hashtagMaker", (hashtags) => {

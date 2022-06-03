@@ -38,6 +38,7 @@ app.use((req, res, next) => {
   res.header("Cross-Origin-Embedder-Policy", "require-corp");
   next();
 });
+app.use(express.json());
 
 app.use("/", rootRouter);
 app.use("/video", videoRouter);
