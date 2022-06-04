@@ -27,7 +27,7 @@ const addComment = (text, id) => {
   li.appendChild(icon);
   li.appendChild(span);
   li.appendChild(deleteBtn);
-  commentList.appendChild(li);
+  commentList.prepend(li);
 };
 
 const handleFormSubmit = async (event) => {
@@ -38,7 +38,7 @@ const handleFormSubmit = async (event) => {
   if (text === "") {
     return;
   }
-  await fetch(`/api/video/${videoId}/comment`, {
+  const response = await fetch(`/api/video/${videoId}/comment`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

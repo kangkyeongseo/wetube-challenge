@@ -2,6 +2,7 @@ import regeneratorRuntime from "regenerator-runtime";
 import { createFFmpeg, fetchFile } from "@ffmpeg/ffmpeg";
 import { async } from "regenerator-runtime";
 
+const recorderBox = document.querySelector(".recorder__box");
 const recorderVideo = document.querySelector(".recorder__video");
 const recorderBtn = document.querySelector(".recorder__btn");
 
@@ -75,8 +76,10 @@ const init = async () => {
       height: 720,
     },
   });
+
   recorderVideo.srcObject = stream;
-  recorderVideo.play();
+  await recorderVideo.play();
+  recorderBox.classList.remove("hidden");
 };
 
 init();

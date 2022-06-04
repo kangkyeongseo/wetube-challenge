@@ -5,7 +5,7 @@ block content
         div.form__container
             h1 Join
             if errorMessage 
-                span=errorMessage
+                span.error-message=errorMessage
             form(method="POST").form
                 input(type="text" placeholder="ID" id="user-id" name="userId" required)
                 input(type="email" placeholder="E-Mail" id="email" name="email" required)
