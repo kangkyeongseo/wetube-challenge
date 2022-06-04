@@ -28,17 +28,20 @@ app.use(
   })
 );
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use(logger);
 app.use(sessionMiddeware);
 app.use(flash());
+
 app.use("/uploads", express.static("uploads"));
 app.use("/static", express.static("assets"));
+
 app.use((req, res, next) => {
   res.header("Cross-Origin-Opener-Policy", "same-origin");
   res.header("Cross-Origin-Embedder-Policy", "require-corp");
   next();
 });
-app.use(express.json());
 
 app.use("/", rootRouter);
 app.use("/video", videoRouter);

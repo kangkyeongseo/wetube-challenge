@@ -4,11 +4,12 @@ import {
   deleteComment,
   registerVideo,
 } from "../controllers/videoController";
+import { protectorMiddleware } from "../middleware";
 
 const apiRouter = new express.Router();
 
 apiRouter.post("/video/:id/view", registerVideo);
-apiRouter.post("/video/:id/comment", createComment);
-apiRouter.delete("/comment/:id/delete", deleteComment);
+apiRouter.all(protectorMiddleware).post("/video/:id/comment", createComment);
+apiRouter.all(protectorMiddleware).delete("/comment/:id/delete", deleteComment);
 
 export default apiRouter;

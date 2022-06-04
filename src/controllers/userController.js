@@ -13,6 +13,7 @@ export const postLogin = async (req, res) => {
     body: { userId, password },
   } = req;
 
+  // Confirm ID
   const user = await User.findOne({ userId, socilaOnly: false });
 
   if (!user) {
@@ -22,6 +23,7 @@ export const postLogin = async (req, res) => {
     });
   }
 
+  // Confirm Password
   const loginOk = await bcrypt.compare(password, user.password);
 
   if (!loginOk) {
@@ -31,10 +33,11 @@ export const postLogin = async (req, res) => {
     });
   }
 
+  // Login Session
   req.session.loggedIn = true;
   req.session.user = user;
-
-  return res.redirect("/");
+  req.flash("info", "Hello");
+  return res.status(400).redirect("/");
 };
 
 // Get Join
@@ -81,6 +84,7 @@ export const postJoin = async (req, res) => {
     avatarUrl: "",
   });
 
+  req.flash("success", "Welcome to Wetube");
   return res.redirect("/login");
 };
 
@@ -96,7 +100,10 @@ export const getDetail = async (req, res) => {
       path: "owner",
     },
   });
-  console.log(user);
+
+  if (!user) {
+    return res.status(400).redirect("/");
+  }
   return res.render("user/detail", { pageTitle: user.name, user });
 };
 
@@ -107,11 +114,13 @@ export const getUserEdit = async (req, res) => {
       user: { _id },
     },
   } = req;
-  if (_id) {
-    const user = await User.findById(_id);
-    return res.render("user/user-edit", { pageTitle: "EDIT", user });
+
+  const user = await User.findById(_id);
+
+  if (!user) {
+    return res.status(400).redirect("/");
   }
-  return res.status(403).redirect("/");
+  return res.render("user/user-edit", { pageTitle: "EDIT", user });
 };
 
 // Post User Edit
@@ -144,7 +153,7 @@ export const postUserEdit = async (req, res) => {
     });
   }
 
-  const updeateUser = await User.findByIdAndUpdate(
+  const updateUser = await User.findByIdAndUpdate(
     _id,
     {
       userId,
@@ -155,8 +164,8 @@ export const postUserEdit = async (req, res) => {
     { new: true }
   );
 
-  req.session.user = updeateUser;
-
+  req.session.user = updateUser;
+  req.flash("success", "Profile updated");
   return res.redirect(`/user/${_id}`);
 };
 
@@ -234,7 +243,6 @@ export const postUserDelete = async (req, res) => {
   await User.findByIdAndDelete(user._id);
 
   req.session.destroy();
-
   return res.redirect("/");
 };
 
@@ -312,6 +320,7 @@ export const finishGithubLogin = async (req, res) => {
     }
     req.session.loggedIn = true;
     req.session.user = githubUser;
+    req.flash("info", "Hello");
     return res.redirect("/");
   } else {
     return res.status(400).redirect("/login");

@@ -55,7 +55,7 @@ export const postUpload = async (req, res) => {
 
   loggedUser.videos.push(newVideo._id);
   loggedUser.save();
-
+  req.flash("success", "Video uploaded successfully");
   return res.redirect("/");
 };
 
@@ -101,6 +101,7 @@ export const postVideoEdit = async (req, res) => {
     hashtags: Video.hashtagMaker(hashtags),
     thumbUrl: file.path,
   });
+  req.flash("success", "Video edit successfully");
   return res.redirect("/");
 };
 
@@ -114,6 +115,7 @@ export const getVideoDelete = async (req, res) => {
     return res.render("video/video-delete", { pageTitle: "DELETE" });
   } else {
     await Video.findByIdAndDelete(id);
+    req.flash("success", "Video delete successfully");
     return res.redirect("/");
   }
 };
@@ -128,11 +130,12 @@ export const postVideoDelete = async (req, res) => {
   const checkOk = await bcrypt.compare(password, video.owner.password);
   if (checkOk) {
     await Video.findByIdAndDelete(id);
+    req.flash("success", "Video delete successfully");
     return res.redirect("/");
   } else {
     return res.render("video/video-delete", {
       pageTitle: "DELETE",
-      errorMessage: "sswords do not match.",
+      errorMessage: "passwords do not match.",
     });
   }
 };

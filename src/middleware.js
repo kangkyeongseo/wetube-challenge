@@ -12,6 +12,7 @@ export const publicMiddleware = (req, res, next) => {
     locals: { loggedIn },
   } = res;
   if (loggedIn) {
+    req.flash("error", "Allow only non-logged-in users");
     return res.status(400).redirect("/");
   } else {
     return next();
@@ -23,6 +24,7 @@ export const protectorMiddleware = (req, res, next) => {
     locals: { loggedIn },
   } = res;
   if (!loggedIn) {
+    req.flash("error", "Allow only logged-in users");
     return res.status(400).redirect("/");
   } else {
     return next();
