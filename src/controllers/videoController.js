@@ -2,7 +2,6 @@ import User from "../models/User";
 import Video from "../models/Video";
 import Comment from "../models/Comment";
 import bcrypt from "bcrypt";
-import { async } from "regenerator-runtime";
 
 // Main Page
 export const getHome = async (req, res) => {
@@ -14,7 +13,6 @@ export const getHome = async (req, res) => {
 };
 
 // Search
-
 export const getSearch = async (req, res) => {
   const {
     query: { search },
@@ -65,6 +63,10 @@ export const getWatch = async (req, res) => {
     params: { id },
   } = req;
   const video = await Video.findById(id).populate("owner").populate("comments");
+  if (!video) {
+    req.flash("error", "Can not find video");
+    return res.status(400).redirect("/");
+  }
   return res.render("video/watch", {
     video,
     pageTitle: video.title,
@@ -78,13 +80,18 @@ export const getVideoEdit = async (req, res) => {
     session: { user },
   } = req;
   const video = await Video.findById(id).populate("owner");
-  if (String(user._id) === String(video.owner._id)) {
+  if (!video) {
+    req.flash("error", "Can not find video");
+    return res.status(400).redirect("/");
+  }
+  if (String(user._id) !== String(video.owner._id)) {
+    req.flash("error", "Can not access");
+    return res.status(400).redirect("/");
+  } else {
     return res.render("video/video-edit", {
       video,
       pageTitle: "EDIT",
     });
-  } else {
-    return res.redirect("/");
   }
 };
 
@@ -111,6 +118,12 @@ export const getVideoDelete = async (req, res) => {
     session: { user },
     params: { id },
   } = req;
+
+  const video = await Video.findById(id);
+  if (!video) {
+    req.flash("error", "Can not find video");
+    return res.status(400).redirect("/");
+  }
   if (!user.socialOnly) {
     return res.render("video/video-delete", { pageTitle: "DELETE" });
   } else {
@@ -128,25 +141,24 @@ export const postVideoDelete = async (req, res) => {
   } = req;
   const video = await Video.findById(id).populate("owner");
   const checkOk = await bcrypt.compare(password, video.owner.password);
-  if (checkOk) {
-    await Video.findByIdAndDelete(id);
-    req.flash("success", "Video delete successfully");
-    return res.redirect("/");
-  } else {
+  if (!checkOk) {
     return res.render("video/video-delete", {
       pageTitle: "DELETE",
       errorMessage: "passwords do not match.",
     });
+  } else {
+    await Video.findByIdAndDelete(id);
+    req.flash("success", "Video delete successfully");
+    return res.redirect("/");
   }
 };
 
 // Register View
 export const registerVideo = async (req, res) => {
   const { id } = req.params;
-  console.log(id);
   const video = await Video.findById(id);
   if (!video) {
-    return res.sendStatus(404);
+    return res.sendStatus(400);
   }
   video.meta.view = video.meta.view + 1;
   await video.save();
@@ -164,7 +176,6 @@ export const createComment = async (req, res) => {
   } = req;
 
   const video = await Video.findById(id);
-  const user = await User.findById(_id);
 
   if (!video) {
     return res.sendStatus(404);
@@ -188,6 +199,14 @@ export const deleteComment = async (req, res) => {
   } = req;
   const comment = await Comment.findById(id);
   const video = await Video.findById(comment.video._id);
+
+  if (!comment) {
+    return res.sendStatus(404);
+  }
+  if (!video) {
+    return res.sendStatus(404);
+  }
+
   video.comments.splice(video.comments.indexOf(id), 1);
   await video.save();
   await Comment.findByIdAndDelete(id);

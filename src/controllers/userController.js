@@ -205,8 +205,8 @@ export const postChangePassword = async (req, res) => {
   }
 
   user.password = newPassword;
-
   await user.save();
+
   req.flash("success", "Password updated");
   return res.redirect(`/user/logout`);
 };
@@ -315,7 +315,7 @@ export const finishGithubLogin = async (req, res) => {
         password: "",
         name: user.name,
         socialOnly: true,
-        avatarUrl: user.avatar_url,
+        avatarUrl: "",
       });
     }
     req.session.loggedIn = true;

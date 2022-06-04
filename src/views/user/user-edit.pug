@@ -13,7 +13,8 @@ block content
                 input(type="text" placeholder="Name" id="name" name="name" required value=user.name)         
                 div.form__btn
                     input(type="submit" value="Edit").form__submit
-                div.form__link
-                    a(href="/user/change-password") Change Password 
-                    br
-                    a(href="/user/delete") Delete Profile 
+                if loggedInUser.socialOnly === false    
+                    div.form__link
+                        a(href="/user/change-password") Change Password 
+                        br
+                        a(href="/user/delete") Delete Profile 
