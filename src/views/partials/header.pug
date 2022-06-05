@@ -18,7 +18,7 @@ header
                         div.default__avatar
                             i.fas.fa-user
                     else
-                        img(src=loggedInUser.avatarUrl)                 
+                        img(src= "/" + loggedInUser.avatarUrl)                 
     form(method="GET" action="/search").header__form   
         input(type="text" name="search" placeholder="Search")
         button

@@ -62,7 +62,14 @@ export const getWatch = async (req, res) => {
   const {
     params: { id },
   } = req;
-  const video = await Video.findById(id).populate("owner").populate("comments");
+  const video = await Video.findById(id)
+    .populate("owner")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "owner",
+      },
+    });
   if (!video) {
     req.flash("error", "Can not find video");
     return res.status(400).redirect("/");
@@ -167,11 +174,13 @@ export const registerVideo = async (req, res) => {
 
 // Create Comment
 export const createComment = async (req, res) => {
+  let data = [];
+
   const {
     body: { text },
     params: { id },
     session: {
-      user: { _id },
+      user: { _id, avatarUrl },
     },
   } = req;
 
@@ -189,7 +198,12 @@ export const createComment = async (req, res) => {
   video.comments.push(comment._id);
   await video.save();
 
-  return res.status(201).json({ newCommentId: comment._id });
+  data.push({
+    newCommentId: comment._id,
+    avatarUrl,
+  });
+
+  return res.status(201).json(data);
 };
 
 // Delete Comment

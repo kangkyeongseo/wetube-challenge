@@ -13,18 +13,35 @@ const handelDeleteBttn = async (evnet) => {
   targetComment.remove();
 };
 
-const addComment = (text, id) => {
+const commentIcon = (url) => {
+  if (url === "") {
+    const icon = document.createElement("div");
+    icon.className = "comment__avatar";
+    const userIcon = document.createElement("i");
+    userIcon.className = "fas fa-user";
+    icon.appendChild(userIcon);
+    return icon;
+  } else {
+    const icon = document.createElement("img");
+    icon.src = "/" + url;
+    return icon;
+  }
+};
+
+const addComment = (text, id, url) => {
   const commentList = document.querySelector(".video__comments ul");
   const li = document.createElement("li");
   li.className = "video__comment";
   li.dataset.id = id;
-  const icon = document.createElement("i");
-  icon.className = "fas fa-comment";
+  const a = document.createElement("a");
+  const icon = commentIcon(url);
   const span = document.createElement("span");
   span.innerText = text;
   const deleteBtn = document.createElement("span");
   deleteBtn.innerText = "❌";
-  li.appendChild(icon);
+  deleteBtn.addEventListener("click", handelDeleteBttn);
+  a.appendChild(icon);
+  li.appendChild(a);
   li.appendChild(span);
   li.appendChild(deleteBtn);
   commentList.prepend(li);
@@ -48,8 +65,8 @@ const handleFormSubmit = async (event) => {
   textarea.value = "";
 
   if (response.status === 201) {
-    const { newCommentId } = response.json();
-    addComment(text, newCommentId);
+    const data = await response.json();
+    addComment(text, data[0].newCommentId, data[0].avatarUrl);
   }
 };
 
