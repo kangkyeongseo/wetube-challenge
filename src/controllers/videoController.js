@@ -200,6 +200,7 @@ export const createComment = async (req, res) => {
 
   data.push({
     newCommentId: comment._id,
+    commentNumber: video.comments.length,
     avatarUrl,
   });
 
@@ -224,5 +225,6 @@ export const deleteComment = async (req, res) => {
   video.comments.splice(video.comments.indexOf(id), 1);
   await video.save();
   await Comment.findByIdAndDelete(id);
-  return res.sendStatus(200);
+
+  return res.status(200).json({ commentNumber: video.comments.length });
 };

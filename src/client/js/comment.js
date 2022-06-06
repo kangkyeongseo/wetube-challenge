@@ -3,14 +3,23 @@ import { async } from "regenerator-runtime";
 const videoContainer = document.querySelector(".video__box");
 const commentForm = document.querySelector(".comments__form");
 const deleteCommentBtn = document.querySelectorAll(".video__comment__delete");
+const commentCount = document.querySelector(".comments__count");
 
 const handelDeleteBttn = async (evnet) => {
   const targetComment = evnet.target.parentElement;
   const { id } = targetComment.dataset;
-  await fetch(`/api/comment/${id}/delete`, {
+  const response = await fetch(`/api/comment/${id}/delete`, {
     method: "DELETE",
   });
-  targetComment.remove();
+
+  if (response.status === 200) {
+    const { commentNumber } = await response.json();
+    commentCount.innerText =
+      commentNumber < 2
+        ? commentNumber + " comment"
+        : commentNumber + " comments";
+    targetComment.remove();
+  }
 };
 
 const commentIcon = (url) => {
@@ -66,6 +75,11 @@ const handleFormSubmit = async (event) => {
 
   if (response.status === 201) {
     const data = await response.json();
+    const commentNumber = data[0].commentNumber;
+    commentCount.innerText =
+      commentNumber < 2
+        ? commentNumber + " comment"
+        : commentNumber + " comments";
     addComment(text, data[0].newCommentId, data[0].avatarUrl);
   }
 };

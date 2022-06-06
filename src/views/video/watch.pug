@@ -44,7 +44,7 @@ block content
                 textarea(name="", cols="30", rows="10" placeholder="Write a Comment")
                 button Add Comment 
     div.video__comments 
-        span #{video.comments.length <= 1 ? `${video.comments.length} comment` : `${video.comments.length} comments`} 
+        span.comments__count #{video.comments.length <= 1 ? `${video.comments.length} comment` : `${video.comments.length} comments`} 
         ul
             each comment in video.comments.reverse()
                 li.video__comment(data-id=comment._id)
