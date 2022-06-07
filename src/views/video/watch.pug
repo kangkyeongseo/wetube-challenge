@@ -54,8 +54,13 @@ block content
                                 i.fas.fa-user
                         else 
                             img(src="/"+comment.owner.avatarUrl)
-                    span=comment.text
+                    span.video__comment__text=comment.text
                     if String(loggedInUser._id) === String(comment.owner._id)
-                        span.video__comment__delete ❌
+                        span.video__comment__edit Edit
+                        span.video__comment__delete Delete
+                        form.comment__eidt-form.hidden
+                            input(type="text" value=comment.text placeholder="Write a Comment")
+                            button Edit 
+                            button(type="button").comment__cancelBtn Cancel 
     script(src="/static/js/videoPlayer.js")
     script(src="/static/js/comment.js")

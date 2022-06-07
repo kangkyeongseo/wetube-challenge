@@ -2,6 +2,7 @@ import User from "../models/User";
 import Video from "../models/Video";
 import Comment from "../models/Comment";
 import bcrypt from "bcrypt";
+import { async } from "regenerator-runtime";
 
 // Main Page
 export const getHome = async (req, res) => {
@@ -205,6 +206,33 @@ export const createComment = async (req, res) => {
   });
 
   return res.status(201).json(data);
+};
+
+// Edit Comment
+export const editComment = async (req, res) => {
+  const {
+    body: { text },
+    params: { id },
+  } = req;
+  const comment = await Comment.findById(id);
+  const video = await Video.findById(comment.video._id);
+
+  if (!comment) {
+    return res.sendStatus(404);
+  }
+  if (!video) {
+    return res.sendStatus(404);
+  }
+
+  await Comment.findByIdAndUpdate(id, {
+    text,
+  });
+
+  const index = video.comments.indexOf(id);
+  video.comments[index].text = text;
+  await video.save();
+
+  return res.sendStatus(201);
 };
 
 // Delete Comment

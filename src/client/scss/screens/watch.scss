@@ -55,8 +55,14 @@
       span {
         margin-right: 10px;
       }
-      .video__comment__delete {
+      span:not(.video__comment__text) {
+        cursor: pointer;
         font-size: 12px;
+        background-color: white;
+        color: $darkGray;
+        padding: 2px 5px;
+      }
+      .comment__eidt-form {
       }
     }
   }
