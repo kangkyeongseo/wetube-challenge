@@ -75,6 +75,7 @@ export const getWatch = async (req, res) => {
     req.flash("error", "Can not find video");
     return res.status(400).redirect("/");
   }
+
   return res.render("video/watch", {
     video,
     pageTitle: video.title,
@@ -255,4 +256,38 @@ export const deleteComment = async (req, res) => {
   await Comment.findByIdAndDelete(id);
 
   return res.status(200).json({ commentNumber: video.comments.length });
+};
+
+//thumb Comment
+export const thumbComment = async (req, res) => {
+  const {
+    session: {
+      user: { _id },
+    },
+    params: { id },
+  } = req;
+
+  const comment = await Comment.findById(id);
+  const user = await User.findById(_id);
+  const video = await Video.findById(comment.video._id);
+
+  if (!comment) {
+    return res.sendStatus(404);
+  }
+  if (!video) {
+    return res.sendStatus(404);
+  }
+
+  if (comment.thumbs.filter((id) => id === _id)[0] === undefined) {
+    comment.thumbs.push(_id);
+    await comment.save();
+
+    return res.status(201).json({ count: comment.thumbs.length });
+  } else {
+    const commentIndex = comment.thumbs.indexOf(_id);
+    comment.thumbs.splice(commentIndex, 1);
+    await comment.save();
+
+    return res.status(201).json({ count: comment.thumbs.length });
+  }
 };

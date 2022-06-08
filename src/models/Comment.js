@@ -5,6 +5,7 @@ const commentSchema = new mongoose.Schema({
   createAt: { type: Date, default: Date.now },
   video: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "Video" },
   owner: { type: mongoose.Schema.Types.ObjectId, required: true, ref: "User" },
+  thumbs: [{ type: String }],
 });
 
 const Comment = mongoose.model("Comment", commentSchema);

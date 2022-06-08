@@ -55,7 +55,7 @@
       span {
         margin-right: 10px;
       }
-      span:not(.video__comment__text) {
+      span:not(.video__comment__text, .thumb__count) {
         cursor: pointer;
         font-size: 12px;
         background-color: white;
@@ -63,6 +63,15 @@
         padding: 2px 5px;
       }
       .comment__eidt-form {
+      }
+      .comment__thumb {
+        font-size: 12px;
+        margin-right: 5px;
+      }
+      .comment__thumb--clicked {
+        color: $blue;
+      }
+      .thumb__count {
       }
     }
   }

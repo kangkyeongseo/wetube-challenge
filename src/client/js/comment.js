@@ -5,6 +5,21 @@ const commentForm = document.querySelector(".comments__form");
 const editCommentBtn = document.querySelectorAll(".video__comment__edit");
 const deleteCommentBtn = document.querySelectorAll(".video__comment__delete");
 const commentCount = document.querySelector(".comments__count");
+const commentThumb = document.querySelectorAll(".comment__thumb");
+
+const handleThumbBtn = async (event) => {
+  const comment = event.target.parentElement;
+  const id = comment.dataset.id;
+  const thumbCount = comment.querySelector(".thumb__count");
+  const response = await fetch(`/api/comment/${id}/thumb`, {
+    method: "POST",
+  });
+
+  const { count } = await response.json();
+
+  event.target.classList.toggle("comment__thumb--clicked");
+  thumbCount.innerText = count;
+};
 
 const hadleCancelBtn = (event) => {
   const form = event.target.parentElement;
@@ -142,3 +157,5 @@ editCommentBtn.forEach((btn) => btn.addEventListener("click", handelEditBttn));
 deleteCommentBtn.forEach((btn) =>
   btn.addEventListener("click", handelDeleteBttn)
 );
+
+commentThumb.forEach((btn) => btn.addEventListener("click", handleThumbBtn));
