@@ -111,11 +111,12 @@ export const postVideoEdit = async (req, res) => {
     body: { title, description, hashtags },
     file,
   } = req;
+  const video = await Video.findById(id);
   await Video.findByIdAndUpdate(id, {
     title,
     description,
     hashtags: Video.hashtagMaker(hashtags),
-    thumbUrl: file.path,
+    thumbUrl: file ? file.path : video.thumbUrl,
   });
   req.flash("success", "Video edit successfully");
   return res.redirect("/");

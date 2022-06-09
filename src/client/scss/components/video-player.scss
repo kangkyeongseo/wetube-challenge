@@ -55,8 +55,9 @@
     display: flex;
     font-size: 14px;
     color: $blue;
-    li {
+    a {
       margin-right: 5px;
+      cursor: pointer;
     }
   }
   .content__title {

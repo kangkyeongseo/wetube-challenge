@@ -20,7 +20,7 @@ block content
     div.video__content 
         ul.content__hash
             each hashtag in video.hashtags
-                li=hashtag
+                a(href=`/search/?search=${hashtag.substring(1)}`)=hashtag
         h3.content__title=video.title
         div.content__meta     
             span 조회수 #{video.meta.view}회

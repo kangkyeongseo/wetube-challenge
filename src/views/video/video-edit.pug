@@ -5,7 +5,7 @@ block content
         div.form__container
             h1 #{video.title} Edit
             form(method="POST" enctype="multipart/form-data").form
-                input(type="file" id="thumb" name="thumb" accept="image/*" required)                
+                input(type="file" id="thumb" name="thumb" accept="image/*")                
                 input(type="text" value=video.title id="title" name="title")                
                 input(type="text" value=video.description id="description" name="description")                
                 input(type="text" value=video.hashtags.toString() id="hashtags" name="hashtags")
