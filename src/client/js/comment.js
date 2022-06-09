@@ -51,7 +51,7 @@ const handleEditSubmit = async (event) => {
 
 const handelEditBttn = (event) => {
   const targetComment = event.target.parentElement;
-  const editForm = targetComment.querySelector(".comment__eidt-form");
+  const editForm = targetComment.querySelector(".comment__edit-form");
   const cancelBtn = editForm.querySelector(".comment__cancelBtn");
   editForm.classList.remove("hidden");
   editForm.addEventListener("submit", handleEditSubmit);
@@ -105,20 +105,49 @@ const addComment = (text, id, url) => {
   span.innerText = text;
   span.className = "video__comment__text";
 
+  const thumb = document.createElement("i");
+  thumb.className = "fas fa-thumbs-up comment__thumb";
+  thumb.addEventListener("click", handleThumbBtn);
+
+  const thumbCount = document.createElement("span");
+  thumbCount.className = "thumb__count";
+  thumbCount.innerText = 0;
+
   const editBtn = document.createElement("span");
   editBtn.innerText = "Edit";
   editBtn.className = "video__comment__edit";
+  editBtn.addEventListener("click", handelEditBttn);
 
   const deleteBtn = document.createElement("span");
   deleteBtn.innerText = "Delete";
   deleteBtn.className = "video__comment__delete";
   deleteBtn.addEventListener("click", handelDeleteBttn);
 
+  const form = document.createElement("form");
+  form.className = "comment__edit-form hidden";
+
+  const input = document.createElement("input");
+  input.value = text;
+  input.placeholder = "Write a Comment";
+
+  const formEdit = document.createElement("button");
+  formEdit.innerText = "Edit";
+
+  const formCancel = document.createElement("button");
+  formCancel.className = "comment__cancelBtn";
+  formCancel.innerText = "Cancel";
+
   a.appendChild(icon);
+  form.appendChild(input);
+  form.appendChild(formEdit);
+  form.appendChild(formCancel);
   li.appendChild(a);
   li.appendChild(span);
+  li.appendChild(thumb);
+  li.appendChild(thumbCount);
   li.appendChild(editBtn);
   li.appendChild(deleteBtn);
+  li.appendChild(form);
   commentList.prepend(li);
 };
 
