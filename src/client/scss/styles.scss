@@ -8,6 +8,7 @@
 // Components
 @import "./components/default-avatar.scss";
 @import "./components/header.scss";
+@import "./components/footer.scss";
 @import "./components/video.scss";
 @import "./components/form.scss";
 @import "./components/video-player.scss";
@@ -33,10 +34,12 @@ a {
 body {
   font-family: "Roboto", sans-serif;
   background-color: $darkGray;
+  color: white;
 }
 
 main {
   padding-top: 100px;
+  min-height: calc(100vh - 60px);
 }
 
 .hidden {

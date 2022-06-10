@@ -1,10 +1,10 @@
 extends ../base
 
 block content
+    div.recorder__box.hidden
+        video.recorder__video
+        button.recorder__btn Record Video
     div.upload.form__page
-        div.recorder__box.hidden
-            video.recorder__video
-            button.recorder__btn Record Video
         div.form__container
             h1 Upload
             form(method="POST" enctype="multipart/form-data").form
