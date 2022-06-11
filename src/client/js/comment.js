@@ -1,14 +1,14 @@
-import { async } from "regenerator-runtime";
+import { async, wrap } from "regenerator-runtime";
 
 const videoContainer = document.querySelector(".video__box");
 const commentForm = document.querySelector(".comments__form");
-const editCommentBtn = document.querySelectorAll(".video__comment__edit");
-const deleteCommentBtn = document.querySelectorAll(".video__comment__delete");
+const editCommentBtn = document.querySelectorAll(".comment__edit");
+const deleteCommentBtn = document.querySelectorAll(".comment__delete");
 const commentCount = document.querySelector(".comments__count");
 const commentThumb = document.querySelectorAll(".comment__thumb");
 
 const handleThumbBtn = async (event) => {
-  const comment = event.target.parentElement;
+  const comment = event.target.parentNode.parentNode;
   const id = comment.dataset.id;
   const thumbCount = comment.querySelector(".thumb__count");
   const response = await fetch(`/api/comment/${id}/thumb`, {
@@ -22,16 +22,19 @@ const handleThumbBtn = async (event) => {
 };
 
 const hadleCancelBtn = (event) => {
-  const form = event.target.parentElement;
+  const form = event.target.parentNode.parentNode;
+  const commentWrap = form.parentNode.querySelector(".comment__wrap");
   form.classList.add("hidden");
+  commentWrap.classList.remove("hidden");
 };
 
 const handleEditSubmit = async (event) => {
   event.preventDefault();
-  const comment = event.target.parentElement;
-  const commentText = comment.querySelector(".video__comment__text");
+  const comment = event.target.parentNode.parentNode;
+  const commentText = comment.querySelector(".comment__text");
   const text = event.target.elements[0].value;
-  const id = event.target.parentElement.dataset.id;
+  const id = event.target.parentNode.parentNode.dataset.id;
+  const commentWrap = comment.querySelector(".comment__wrap");
 
   if (text === "") {
     return;
@@ -46,20 +49,23 @@ const handleEditSubmit = async (event) => {
   });
 
   commentText.innerText = text;
-  event.target.classList.add("hidden");
+  event.target.parentNode.classList.add("hidden");
+  commentWrap.classList.remove("hidden");
 };
 
 const handelEditBttn = (event) => {
-  const targetComment = event.target.parentElement;
-  const editForm = targetComment.querySelector(".comment__edit-form");
+  const targetComment = event.target.parentNode.parentNode;
+  const commentWrap = targetComment.querySelector(".comment__wrap");
+  const editForm = targetComment.querySelector(".comment__form");
   const cancelBtn = editForm.querySelector(".comment__cancelBtn");
   editForm.classList.remove("hidden");
+  commentWrap.classList.add("hidden");
   editForm.addEventListener("submit", handleEditSubmit);
   cancelBtn.addEventListener("click", hadleCancelBtn);
 };
 
 const handelDeleteBttn = async (event) => {
-  const targetComment = event.target.parentElement;
+  const targetComment = event.target.parentNode.parentNode;
   const { id } = targetComment.dataset;
   const response = await fetch(`/api/comment/${id}/delete`, {
     method: "DELETE",
@@ -101,9 +107,12 @@ const addComment = (text, id, url) => {
 
   const icon = commentIcon(url);
 
+  const wrap = document.createElement("div");
+  wrap.className = "comment__wrap";
+
   const span = document.createElement("span");
   span.innerText = text;
-  span.className = "video__comment__text";
+  span.className = "comment__text";
 
   const thumb = document.createElement("i");
   thumb.className = "fas fa-thumbs-up comment__thumb";
@@ -115,16 +124,19 @@ const addComment = (text, id, url) => {
 
   const editBtn = document.createElement("span");
   editBtn.innerText = "Edit";
-  editBtn.className = "video__comment__edit";
+  editBtn.className = "comment__edit";
   editBtn.addEventListener("click", handelEditBttn);
 
   const deleteBtn = document.createElement("span");
   deleteBtn.innerText = "Delete";
-  deleteBtn.className = "video__comment__delete";
+  deleteBtn.className = "comment__delete";
   deleteBtn.addEventListener("click", handelDeleteBttn);
 
+  const fromWrap = document.createElement("div");
+  fromWrap.className = "comment__form hidden";
+
   const form = document.createElement("form");
-  form.className = "comment__edit-form hidden";
+  form.className = "comment__edit-form";
 
   const input = document.createElement("input");
   input.value = text;
@@ -138,16 +150,18 @@ const addComment = (text, id, url) => {
   formCancel.innerText = "Cancel";
 
   a.appendChild(icon);
+  wrap.appendChild(span);
+  wrap.appendChild(thumb);
+  wrap.appendChild(thumbCount);
+  wrap.appendChild(editBtn);
+  wrap.appendChild(deleteBtn);
   form.appendChild(input);
   form.appendChild(formEdit);
   form.appendChild(formCancel);
+  fromWrap.appendChild(form);
   li.appendChild(a);
-  li.appendChild(span);
-  li.appendChild(thumb);
-  li.appendChild(thumbCount);
-  li.appendChild(editBtn);
-  li.appendChild(deleteBtn);
-  li.appendChild(form);
+  li.appendChild(wrap);
+  li.appendChild(fromWrap);
   commentList.prepend(li);
 };
 

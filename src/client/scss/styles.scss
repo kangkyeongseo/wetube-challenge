@@ -13,6 +13,7 @@
 @import "./components/form.scss";
 @import "./components/video-player.scss";
 @import "./components/message.scss";
+@import "./components/button.scss";
 
 // Screens
 @import "./screens/home.scss";
@@ -34,7 +35,6 @@ a {
 body {
   font-family: "Roboto", sans-serif;
   background-color: $darkGray;
-  color: white;
 }
 
 main {

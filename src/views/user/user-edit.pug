@@ -7,6 +7,7 @@ block content
             if errorMessage 
                 span=errorMessage
             form(method="POST" enctype="multipart/form-data").form
+                label(for="avatar") Avatar File
                 input(type="file" id="avatar" name="avatar" accept="image/*")
                 input(type="text" placeholder="ID" id="user-id" name="userId" required value=user.userId)
                 input(type="email" placeholder="E-Mail" id="email" name="email" required value=user.email)

@@ -36,6 +36,7 @@
       display: flex;
       align-items: center;
       margin-bottom: 5px;
+      overflow: hidden;
       a {
         margin-right: 10px;
         .comment__avatar {
@@ -52,26 +53,36 @@
           border-radius: 50%;
         }
       }
-      span {
-        margin-right: 10px;
+      .comment__wrap {
+        span {
+          margin-right: 10px;
+        }
+        span:not(.comment__text, .thumb__count) {
+          @include button;
+        }
+        .comment__thumb {
+          font-size: 12px;
+          margin-right: 5px;
+        }
+        .comment__thumb--clicked {
+          color: $blue;
+        }
       }
-      span:not(.video__comment__text, .thumb__count) {
-        cursor: pointer;
-        font-size: 12px;
-        background-color: white;
-        color: $darkGray;
-        padding: 2px 5px;
-      }
-      .comment__eidt-form {
-      }
-      .comment__thumb {
-        font-size: 12px;
-        margin-right: 5px;
-      }
-      .comment__thumb--clicked {
-        color: $blue;
-      }
-      .thumb__count {
+      .comment__form {
+        input {
+          background-color: transparent;
+          color: white;
+          padding: 5px 3px;
+          border: none;
+          border-bottom: 0.5px solid white;
+          &:focus {
+            outline: none;
+          }
+        }
+        button {
+          @include button;
+          margin-left: 10px;
+        }
       }
     }
   }

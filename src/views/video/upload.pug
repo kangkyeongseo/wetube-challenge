@@ -8,7 +8,9 @@ block content
         div.form__container
             h1 Upload
             form(method="POST" enctype="multipart/form-data").form
+                label(for="video") Video File
                 input(type="file" id="video" name="video" accept="video/*" required)
+                label(for="thumb") Thumbnail File
                 input(type="file" id="thumb" name="thumb" accept="image/*" required)
                 input(type="text" placeholder="Title" id="title" name="title" required)
                 input(type="text" placeholder="Description" id="description" name="description" required)

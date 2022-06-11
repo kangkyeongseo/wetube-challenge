@@ -54,18 +54,21 @@ block content
                                 i.fas.fa-user
                         else 
                             img(src="/"+comment.owner.avatarUrl)
-                    span.video__comment__text=comment.text
-                    if comment.thumbs.filter((id) => id === loggedInUser._id)[0] !== undefined
-                        i.fas.fa-thumbs-up.comment__thumb.comment__thumb--clicked
-                    else 
-                        i.fas.fa-thumbs-up.comment__thumb
-                    span.thumb__count=comment.thumbs.length
-                    if String(loggedInUser._id) === String(comment.owner._id)
-                        span.video__comment__edit Edit
-                        span.video__comment__delete Delete
-                        form.comment__edit-form.hidden
-                            input(type="text" value=comment.text placeholder="Write a Comment")
-                            button Edit 
-                            button(type="button").comment__cancelBtn Cancel 
+                    div.comment__wrap
+                        span.comment__text=comment.text
+                        if comment.thumbs.filter((id) => id === loggedInUser._id)[0] !== undefined
+                            i.fas.fa-thumbs-up.comment__thumb.comment__thumb--clicked
+                        else 
+                            i.fas.fa-thumbs-up.comment__thumb 
+                        span.thumb__count=comment.thumbs.length
+                        if String(loggedInUser._id) === String(comment.owner._id)
+                            span.comment__edit Edit
+                            span.comment__delete Delete
+                    div.comment__form.hidden
+                        if String(loggedInUser._id) === String(comment.owner._id)    
+                            form.comment__edit-form
+                                input(type="text" value=comment.text placeholder="Write a Comment")
+                                button Edit 
+                                button(type="button").comment__cancelBtn Cancel 
     script(src="/static/js/videoPlayer.js")
     script(src="/static/js/comment.js")
