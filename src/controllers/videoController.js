@@ -41,6 +41,8 @@ export const postUpload = async (req, res) => {
     files: { video, thumb },
   } = req;
 
+  const isHeroku = process.env.NODE_ENV === "production";
+
   const newVideo = await Video.create({
     fileUrl: isHeroku ? video[0].location : video[0].path,
     thumbUrl: isHeroku ? thumb[0].location : thumb[0].path,
@@ -112,6 +114,9 @@ export const postVideoEdit = async (req, res) => {
     file,
   } = req;
   const video = await Video.findById(id);
+
+  const isHeroku = process.env.NODE_ENV === "production";
+
   await Video.findByIdAndUpdate(id, {
     title,
     description,

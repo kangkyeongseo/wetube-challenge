@@ -152,6 +152,7 @@ export const postUserEdit = async (req, res) => {
       user,
     });
   }
+  const isHeroku = process.env.NODE_ENV === "production";
 
   const updateUser = await User.findByIdAndUpdate(
     _id,
