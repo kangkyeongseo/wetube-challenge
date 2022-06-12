@@ -1,9 +1,6 @@
 import express from "express";
-import session from "express-session";
 import morgan from "morgan";
-import "regenerator-runtime";
-import "./db.js";
-import "dotenv/config";
+import session from "express-session";
 import MongoStore from "connect-mongo";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
@@ -13,7 +10,6 @@ import apiRouter from "./routers/apiRouter.js";
 import flash from "express-flash";
 
 const app = express();
-const PORT = process.env.PORT || 4000;
 
 const logger = morgan("dev");
 
@@ -49,5 +45,4 @@ app.use("/video", videoRouter);
 app.use("/user", userRouter);
 app.use("/api", apiRouter);
 
-const handleListen = () => console.log(`Listening on http://localhost${PORT}`);
-app.listen(PORT, handleListen);
+export default app;

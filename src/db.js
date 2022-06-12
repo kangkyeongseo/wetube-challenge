@@ -1,8 +1,4 @@
 import mongoose from "mongoose";
-import "./models/Video";
-import "./models/User";
-import "./models/Comment";
-import "dotenv/config";
 
 mongoose.connect(process.env.MONGOOSE_URL);
 
