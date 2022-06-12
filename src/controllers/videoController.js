@@ -42,8 +42,8 @@ export const postUpload = async (req, res) => {
   } = req;
 
   const newVideo = await Video.create({
-    fileUrl: video[0].path,
-    thumbUrl: thumb[0].path,
+    fileUrl: isHeroku ? video[0].lacation : video[0].path,
+    thumbUrl: isHeroku ? thumb[0].location : thumb[0].path,
     title,
     description,
     hashtags: Video.hashtagMaker(hashtags),
@@ -116,7 +116,7 @@ export const postVideoEdit = async (req, res) => {
     title,
     description,
     hashtags: Video.hashtagMaker(hashtags),
-    thumbUrl: file ? file.path : video.thumbUrl,
+    thumbUrl: file ? (isHeroku ? file.location : file.path) : video.thumbUrl,
   });
   req.flash("success", "Video edit successfully");
   return res.redirect("/");
