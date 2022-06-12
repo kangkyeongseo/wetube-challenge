@@ -97,6 +97,10 @@ const handleMouseLeave = () => {
 
 const handelKeyDown = (event) => {
   const { code } = event;
+  console.log(event.target.localName);
+  if (event.target.localName === "textarea") {
+    return;
+  }
   if (code === "Space") {
     handlePlayBtn();
   }
