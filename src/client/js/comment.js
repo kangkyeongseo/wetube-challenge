@@ -91,7 +91,7 @@ const commentIcon = (url) => {
     return icon;
   } else {
     const icon = document.createElement("img");
-    icon.src = "/" + url;
+    icon.src = url;
     return icon;
   }
 };
