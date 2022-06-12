@@ -7,7 +7,7 @@ mixin video(video)
                     div.default-avatar
                         i.fas.fa-user
                 else    
-                    img(src=isHeroku ? video.owner.avatarUrl : "/" + video.owner.avatarUrl)
+                    img(src=isHeroku ? video.owner.avatarUrl : "/" + video.owner.avatarUrl crossorigin)
                 div.link__info
                     span=video.title
                     span=video.owner.name
