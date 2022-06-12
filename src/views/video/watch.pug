@@ -2,7 +2,7 @@ extends ../base
 
 block content
     div.video__box(data-id=video._id)
-        video(src=isHeroku ? video.fileUrl : "/"+video.fileUrl crossorigin ).video__player
+        video(src=isHeroku ? video.fileUrl : "/"+video.fileUrl crossorigin).video__player
         div.video__controller
             div.controller__play
                 i.fas.fa-play
