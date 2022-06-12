@@ -1,10 +1,10 @@
 import express from "express";
 import session from "express-session";
+import morgan from "morgan";
 import "regenerator-runtime";
 import "./db.js";
 import "dotenv/config";
 import MongoStore from "connect-mongo";
-import morgan from "morgan";
 import rootRouter from "./routers/rootRouter";
 import userRouter from "./routers/userRouter";
 import videoRouter from "./routers/videoRouter";
