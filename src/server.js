@@ -1,5 +1,6 @@
 import express from "express";
 import session from "express-session";
+import "regenerator-runtime";
 import "./db.js";
 import "dotenv/config";
 import MongoStore from "connect-mongo";
@@ -10,7 +11,6 @@ import videoRouter from "./routers/videoRouter";
 import { sessionMiddeware } from "./middleware.js";
 import apiRouter from "./routers/apiRouter.js";
 import flash from "express-flash";
-import "regenerator-runtime";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
