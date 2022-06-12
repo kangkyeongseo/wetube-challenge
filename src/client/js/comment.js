@@ -92,6 +92,7 @@ const commentIcon = (url) => {
   } else {
     const icon = document.createElement("img");
     icon.src = url;
+    icon.crossOrigin = "crossorigin";
     return icon;
   }
 };
