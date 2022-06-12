@@ -12,7 +12,7 @@ import apiRouter from "./routers/apiRouter.js";
 import flash from "express-flash";
 
 const app = express();
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 const logger = morgan("dev");
 
