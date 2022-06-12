@@ -8,7 +8,7 @@ block content
                 div.default__avatar
                     i.fas.fa-user
             else
-                img(src=user.avatarUrl.includes("github") ? user.avatarUrl : "/" + user.avatarUrl)
+                img(src= isHeroku ? user.avatarUrl : "/" + user.avatarUrl)
             div.user-detail__content
                 h1 #{user.name}
                 if String(loggedInUser._id) === String(user._id)
