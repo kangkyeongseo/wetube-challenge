@@ -3,6 +3,7 @@ import "./models/Video";
 import "./models/User";
 import "./models/Comment";
 import "dotenv/config";
+import "regenerator-runtime";
 
 mongoose.connect(process.env.MONGOOSE_URL);
 
