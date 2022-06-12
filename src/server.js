@@ -10,6 +10,7 @@ import videoRouter from "./routers/videoRouter";
 import { sessionMiddeware } from "./middleware.js";
 import apiRouter from "./routers/apiRouter.js";
 import flash from "express-flash";
+import "regenerator-runtime";
 
 const app = express();
 const PORT = process.env.PORT || 4000;
