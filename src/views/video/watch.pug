@@ -2,7 +2,7 @@ extends ../base
 
 block content
     div.video__box(data-id=video._id)
-        video(src="/"+video.fileUrl ).video__player
+        video(src=isHeroku ? video.fileUrl : "/"+video.fileUrl ).video__player
         div.video__controller
             div.controller__play
                 i.fas.fa-play
@@ -30,7 +30,7 @@ block content
                 div.default__avatar
                     i.fas.fa-user
             else
-                img(src=video.owner.avatarUrl.includes("github") ? video.owner.avatarUrl : "/" + video.owner.avatarUrl)
+                img(src=isHeroku ? video.owner.avatarUrl : "/" + video.owner.avatarUrl)
             div.avatar__content
                 a(href=`/user/${video.owner._id}`)=video.owner.name
                 p=video.description
@@ -53,7 +53,7 @@ block content
                             div.comment__avatar
                                 i.fas.fa-user
                         else 
-                            img(src="/"+comment.owner.avatarUrl)
+                            img(src=isHeroku ? comment.owner.avatarUrl : "/"+comment.owner.avatarUrl)
                     div.comment__wrap
                         span.comment__text=comment.text
                         if comment.thumbs.filter((id) => id === loggedInUser._id)[0] !== undefined

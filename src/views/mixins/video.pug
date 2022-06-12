@@ -1,13 +1,13 @@
 mixin video(video)
     a(href=`/video/${video._id}`).video__link
         div.link__container 
-            div(style=`background-image:url(/${video.thumbUrl});`).link__thumb
+            div(style=`background-image:url(${isHeroku ? video.thumbUrl : "/" + video.thumbUrl});`).link__thumb
             div.link__content 
                 if video.owner.avatarUrl === ""
                     div.default-avatar
                         i.fas.fa-user
                 else    
-                    img(src=video.owner.avatarUrl.includes("github") ? video.owner.avatarUrl : "/" + video.owner.avatarUrl)
+                    img(src=isHeroku ? video.owner.avatarUrl : "/" + video.owner.avatarUrl)
                 div.link__info
                     span=video.title
                     span=video.owner.name
