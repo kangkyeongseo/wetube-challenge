@@ -194,12 +194,22 @@ const handleFormSubmit = async (event) => {
   }
 };
 
-commentForm.addEventListener("submit", handleFormSubmit);
+if (commentForm) {
+  commentForm.addEventListener("submit", handleFormSubmit);
+}
 
-editCommentBtn.forEach((btn) => btn.addEventListener("click", handelEditBttn));
+if (editCommentBtn) {
+  editCommentBtn.forEach((btn) =>
+    btn.addEventListener("click", handelEditBttn)
+  );
+}
 
-deleteCommentBtn.forEach((btn) =>
-  btn.addEventListener("click", handelDeleteBttn)
-);
+if (deleteCommentBtn) {
+  deleteCommentBtn.forEach((btn) =>
+    btn.addEventListener("click", handelDeleteBttn)
+  );
+}
 
-commentThumb.forEach((btn) => btn.addEventListener("click", handleThumbBtn));
+if (commentThumb) {
+  commentThumb.forEach((btn) => btn.addEventListener("click", handleThumbBtn));
+}
